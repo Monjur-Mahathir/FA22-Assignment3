@@ -10,6 +10,8 @@ from pymongo import MongoClient
 user_auth = {'Authorization':'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMzhSRFQiLCJzdWIiOiJCNEYzNVEiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJzZXQgcm94eSBycHJvIHJudXQgcnNsZSByYWN0IHJsb2MgcnJlcyByd2VpIHJociBydGVtIiwiZXhwIjoxNjkzNDg4MDQxLCJpYXQiOjE2NjE5NTIwNDF9.uk4UyLwyQeLjnoE6jxKPNCxfkzs0mFTq_09cfuyV74U'}
 
 app = Flask(__name__)
+client = MongoClient("mongodb+srv://mahathir:Utsho1Ratri2!@cluster0.8dz3hgk.mongodb.net/?retryWrites=true&w=majority")
+db = client["FA22Comp590"]
 
 @app.route("/myjoke", methods=["GET"])
 def mymethod():
@@ -122,7 +124,4 @@ def create_row_in_pose():
     
     
 if __name__ == '__main__':
-    client = MongoClient("mongodb+srv://mahathir:Utsho1Ratri2!@cluster0.8dz3hgk.mongodb.net/?retryWrites=true&w=majority")
-    db = client["FA22Comp590"]
-    
     app.run(debug=True)
