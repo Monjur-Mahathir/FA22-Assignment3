@@ -1,1 +1,1 @@
-web:gunicorn assignment3_code:app
+web: gunicorn assignment3_code:app
