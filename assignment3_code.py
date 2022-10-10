@@ -107,7 +107,8 @@ def create_row_in_env():
     request_data = request.get_json()
     temp = request_data['temp']
     humidity = request_data['humidity']
-    timestamp = request_data['timestamp']
+    #timestamp = request_data['timestamp']
+    timestamp = datetime.datetime.now()
     create_row_data = {'temp': str(temp),'humidity':str(humidity),'timestamp':str(timestamp)}
     db.env.insert_one(create_row_data)
     return '''<h1>Data inserted</h1>'''
@@ -117,7 +118,8 @@ def create_row_in_pose():
     request_data = request.get_json()
     presence = request_data['presence']
     pose = request_data['pose']
-    timestamp = request_data['timestamp']
+    #timestamp = request_data['timestamp']
+    timestamp = datetime.datetime.now()
     create_row_data = {'presence': str(presence),'pose':str(pose),'timestamp':str(timestamp)}
     db.pose.insert_one(create_row_data)
     return '''<h1>Data inserted</h1>'''
