@@ -76,7 +76,6 @@ def get_activity(date):
 def get_env_from_sensor():
     rows = db.env.find({})
     row = -1
-    timestamp = 0.0
     firstTime = False
     for x in rows:
         if firstTime:
@@ -97,7 +96,6 @@ def get_env_from_sensor():
 def get_pose_from_sensor():
     rows = db.pose.find({})
     row = -1
-    timestamp = 0.0
     firstTime = True
     for x in rows:
         if firstTime:
