@@ -92,10 +92,16 @@ def get_pose_from_sensor():
     rows = db.pose.find({})
     row = -1
     timestamp = 0.0
+    firstTime = True
     for x in rows:
-        if float(x["timestamp"]) >= timestamp:
-            timestamp = float(x["timestamp"])
+        if firstTime:
+            firstTime = False
+            timestamp = x["timestamp"]
             row = x
+        else:
+            if x["timestamp"] >= timestamp:
+                timestamp = x["timestamp"]
+                row = x
     if row == -1:
         ret = {'error': 'No data available'}
         return jsonify(ret)
