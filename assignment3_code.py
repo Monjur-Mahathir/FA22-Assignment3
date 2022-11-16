@@ -39,8 +39,7 @@ def last_heartrate():
         offset_str += str(int(offset/3600)) + ' hours'
     if (offset%3600)/60 >= 1:
         offset_str += ', ' + str(int((offset%3600)/60)) + ' minutes'
-    if ((offset%3600)%60)/60 >= 1:
-        offset_str += ', ' + str(int(((offset%3600)%60))) + ' seconds'
+    offset_str += ', ' + str(int(((offset%3600)%60))) + ' seconds'
     
     ret = {'heart-rate' : resp['activities-heart-intraday']['dataset'][-1]['value'], 'time-offset': offset_str}
     return jsonify(ret)
@@ -67,8 +66,7 @@ def last_step():
         offset_str += str(int(offset/3600)) + ' hours'
     if (offset%3600)/60 >= 1:
         offset_str += ', ' + str(int((offset%3600)/60)) + ' minutes'
-    if ((offset%3600)%60)/60 >= 1:
-        offset_str += ', ' + str(int(((offset%3600)%60))) + ' seconds'
+    offset_str += ', ' + str(int(((offset%3600)%60))) + ' seconds'
     
     ret = {'step-count' : resp['activities-steps'][0]['value'], 'distance':dis_resp['activities-distance'][0]['value'] ,'time-offset': offset_str}
     return jsonify(ret)
