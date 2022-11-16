@@ -34,7 +34,15 @@ def last_heartrate():
     print(offset)
     splitted_str = offset.split(':')
     #offset_str = splitted_str[0] + ' hours, ' + splitted_str[1] + ' minutes and ' + splitted_str[2] + ' seconds'
-    ret = {'heart-rate' : resp['activities-heart-intraday']['dataset'][-1]['value'], 'time-offset': offset}
+    offset_str = ""
+    if offset/3600 >= 1:
+        offset_str += str(offset/3600) + ' hours, '
+    if (offset%3600)/60 >= 1:
+        offset_str += str((offset%3600)/60 ) + ' minutes, '
+    if ((offset%3600)%60)/60 >= 1:
+        offset_str += str(((offset%3600)%60)) + ' seconds'
+    
+    ret = {'heart-rate' : resp['activities-heart-intraday']['dataset'][-1]['value'], 'time-offset': offset_str}
     return jsonify(ret)
 
 @app.route("/steps/last", methods=["GET"])
