@@ -38,7 +38,7 @@ def last_heartrate():
     if offset/3600 >= 1:
         offset_str += str(int(offset/3600)) + ' hours'
     if (offset%3600)/60 >= 1:
-        offset_str += ', ' + str(int((offset%3600)/60)) + ' minutes, '
+        offset_str += ', ' + str(int((offset%3600)/60)) + ' minutes'
     if ((offset%3600)%60)/60 >= 1:
         offset_str += ', ' + str(int(((offset%3600)%60))) + ' seconds'
     
@@ -66,7 +66,7 @@ def last_step():
     if offset/3600 >= 1:
         offset_str += str(int(offset/3600)) + ' hours'
     if (offset%3600)/60 >= 1:
-        offset_str += ', ' + str(int((offset%3600)/60)) + ' minutes, '
+        offset_str += ', ' + str(int((offset%3600)/60)) + ' minutes'
     if ((offset%3600)%60)/60 >= 1:
         offset_str += ', ' + str(int(((offset%3600)%60))) + ' seconds'
     
