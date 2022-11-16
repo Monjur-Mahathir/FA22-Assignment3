@@ -30,9 +30,9 @@ def last_heartrate():
     #current_time = datetime.now()
     
     fitbit_last_time = resp['activities-heart'][0]['dateTime'] + ' ' +resp['activities-heart-intraday']['dataset'][-1]['time']
-    offset = str(current_time -  datetime.strptime(fitbit_last_time, '%Y-%m-%d %H:%M:%S').timestamp())
-    print(offset)
-    splitted_str = offset.split(':')
+    offset = current_time -  datetime.strptime(fitbit_last_time, '%Y-%m-%d %H:%M:%S').timestamp()
+    
+    #splitted_str = offset.split(':')
     #offset_str = splitted_str[0] + ' hours, ' + splitted_str[1] + ' minutes and ' + splitted_str[2] + ' seconds'
     offset_str = ""
     if offset/3600 >= 1:
