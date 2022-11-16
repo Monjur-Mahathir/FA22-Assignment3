@@ -36,11 +36,11 @@ def last_heartrate():
     #offset_str = splitted_str[0] + ' hours, ' + splitted_str[1] + ' minutes and ' + splitted_str[2] + ' seconds'
     offset_str = ""
     if offset/3600 >= 1:
-        offset_str += str(int(offset/3600)) + ' hours, '
+        offset_str += str(int(offset/3600)) + ' hours'
     if (offset%3600)/60 >= 1:
-        offset_str += str(int((offset%3600)/60)) + ' minutes, '
+        offset_str += ', ' + str(int((offset%3600)/60)) + ' minutes, '
     if ((offset%3600)%60)/60 >= 1:
-        offset_str += str(int(((offset%3600)%60))) + ' seconds'
+        offset_str += ', ' + str(int(((offset%3600)%60))) + ' seconds'
     
     ret = {'heart-rate' : resp['activities-heart-intraday']['dataset'][-1]['value'], 'time-offset': offset_str}
     return jsonify(ret)
@@ -54,13 +54,22 @@ def last_step():
     
     timezone_offset = -8.0  # Pacific Standard Time (UTC−08:00)
     tzinfo = timezone(timedelta(hours=timezone_offset))
-    current_time = datetime.now(tzinfo)
+    current_time = datetime.now(tzinfo).timestamp()
     #current_time = datetime.now()
     
     fitbit_last_time = resp['activities-steps'][0]['dateTime'] + ' ' +resp['activities-steps-intraday']['dataset'][-1]['time']
-    offset = str(current_time -  datetime.strptime(fitbit_last_time, '%Y-%m-%d %H:%M:%S'))
-    splitted_str = offset.split(':')
-    offset_str = splitted_str[0] + ' hours, ' + splitted_str[1] + ' minutes and ' + splitted_str[2] + ' seconds'
+    offset = current_time -  datetime.strptime(fitbit_last_time, '%Y-%m-%d %H:%M:%S'.timestamp())
+    
+    #splitted_str = offset.split(':')
+    #offset_str = splitted_str[0] + ' hours, ' + splitted_str[1] + ' minutes and ' + splitted_str[2] + ' seconds'
+    offset_str = ""
+    if offset/3600 >= 1:
+        offset_str += str(int(offset/3600)) + ' hours'
+    if (offset%3600)/60 >= 1:
+        offset_str += ', ' + str(int((offset%3600)/60)) + ' minutes, '
+    if ((offset%3600)%60)/60 >= 1:
+        offset_str += ', ' + str(int(((offset%3600)%60))) + ' seconds'
+    
     ret = {'step-count' : resp['activities-steps'][0]['value'], 'distance':dis_resp['activities-distance'][0]['value'] ,'time-offset': offset_str}
     return jsonify(ret)
 
@@ -136,7 +145,7 @@ def create_row_in_env():
     
     timezone_offset = -8.0  # Pacific Standard Time (UTC−08:00)
     tzinfo = timezone(timedelta(hours=timezone_offset))
-    current_time = datetime.now(tzinfo)
+    timestamp = datetime.now(tzinfo).timestamp()
     #timestamp = request_data['timestamp']
     #timestamp = datetime.now()
     
@@ -153,7 +162,7 @@ def create_row_in_pose():
     
     timezone_offset = -8.0  # Pacific Standard Time (UTC−08:00)
     tzinfo = timezone(timedelta(hours=timezone_offset))
-    current_time = datetime.now(tzinfo)
+    timestamp = datetime.now(tzinfo).timestamp()
     #timestamp = datetime.now()
     
     create_row_data = {'presence': str(presence),'pose':str(pose),'timestamp':str(timestamp)}
