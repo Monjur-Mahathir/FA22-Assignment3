@@ -21,10 +21,10 @@ def mymethod():
 
 @app.route("/heartrate/last", methods=["GET"])
 def last_heartrate():
-    fitbit_web_api_request_url = "https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1sec.json"
+    fitbit_web_api_request_url = "https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1sec.json?timezone=UTC"
     resp = requests.get(fitbit_web_api_request_url, headers=user_auth).json()
     
-    timezone_offset = -8.0  # Pacific Standard Time (UTC−08:00)
+    timezone_offset = 0.0  # Pacific Standard Time (UTC−08:00)
     tzinfo = timezone(timedelta(hours=timezone_offset))
     current_time = datetime.now(tzinfo).timestamp()
     #current_time = datetime.now()
@@ -47,12 +47,12 @@ def last_heartrate():
 
 @app.route("/steps/last", methods=["GET"])
 def last_step():
-    fitbit_web_api_request_url = "https://api.fitbit.com/1/user/-/activities/steps/date/today/1d.json"
+    fitbit_web_api_request_url = "https://api.fitbit.com/1/user/-/activities/steps/date/today/1d.json?timezone=UTC"
     resp = requests.get(fitbit_web_api_request_url, headers=user_auth).json()
-    fitbit_web_api_request_url_1 = "https://api.fitbit.com/1/user/-/activities/distance/date/today/1d.json"
+    fitbit_web_api_request_url_1 = "https://api.fitbit.com/1/user/-/activities/distance/date/today/1d.json?timezone=UTC"
     dis_resp = requests.get(fitbit_web_api_request_url_1, headers=user_auth).json()
     
-    timezone_offset = -8.0  # Pacific Standard Time (UTC−08:00)
+    timezone_offset = 0.0  # Pacific Standard Time (UTC−08:00)
     tzinfo = timezone(timedelta(hours=timezone_offset))
     current_time = datetime.now(tzinfo).timestamp()
     #current_time = datetime.now()
@@ -143,7 +143,7 @@ def create_row_in_env():
     temp = request_data['temp']
     humidity = request_data['humidity']
     
-    timezone_offset = -8.0  # Pacific Standard Time (UTC−08:00)
+    timezone_offset = -5.0
     tzinfo = timezone(timedelta(hours=timezone_offset))
     timestamp = datetime.now(tzinfo).timestamp()
     #timestamp = request_data['timestamp']
@@ -160,7 +160,7 @@ def create_row_in_pose():
     pose = request_data['pose']
     #timestamp = request_data['timestamp']
     
-    timezone_offset = -8.0  # Pacific Standard Time (UTC−08:00)
+    timezone_offset = -5.0  # Pacific Standard Time (UTC−08:00)
     tzinfo = timezone(timedelta(hours=timezone_offset))
     timestamp = datetime.now(tzinfo).timestamp()
     #timestamp = datetime.now()
