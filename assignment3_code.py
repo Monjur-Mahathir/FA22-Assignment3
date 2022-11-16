@@ -58,7 +58,7 @@ def last_step():
     #current_time = datetime.now()
     
     fitbit_last_time = resp['activities-steps'][0]['dateTime'] + ' ' +resp['activities-steps-intraday']['dataset'][-1]['time']
-    offset = current_time -  datetime.strptime(fitbit_last_time, '%Y-%m-%d %H:%M:%S'.timestamp())
+    offset = current_time -  datetime.strptime(fitbit_last_time, '%Y-%m-%d %H:%M:%S').timestamp()
     
     #splitted_str = offset.split(':')
     #offset_str = splitted_str[0] + ' hours, ' + splitted_str[1] + ' minutes and ' + splitted_str[2] + ' seconds'
