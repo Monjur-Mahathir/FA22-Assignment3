@@ -26,11 +26,11 @@ def last_heartrate():
     
     timezone_offset = -8.0  # Pacific Standard Time (UTC−08:00)
     tzinfo = timezone(timedelta(hours=timezone_offset))
-    current_time = datetime.now(tzinfo)
+    current_time = datetime.now(tzinfo).timestamp()
     #current_time = datetime.now()
     
     fitbit_last_time = resp['activities-heart'][0]['dateTime'] + ' ' +resp['activities-heart-intraday']['dataset'][-1]['time']
-    offset = str(current_time -  datetime.strptime(fitbit_last_time, '%Y-%m-%d %H:%M:%S'))
+    offset = str(current_time -  datetime.strptime(fitbit_last_time, '%Y-%m-%d %H:%M:%S').timestamp())
     print(offset)
     splitted_str = offset.split(':')
     offset_str = splitted_str[0] + ' hours, ' + splitted_str[1] + ' minutes and ' + splitted_str[2] + ' seconds'
