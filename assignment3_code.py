@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 import requests, json
 import numpy as np
-from datetime import date, datetime
+from datetime import date, datetime, timezone
 from datetime import timedelta
 from pymongo import MongoClient
 
@@ -23,7 +23,12 @@ def mymethod():
 def last_heartrate():
     fitbit_web_api_request_url = "https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1sec.json"
     resp = requests.get(fitbit_web_api_request_url, headers=user_auth).json()
-    current_time = datetime.now()
+    
+    timezone_offset = -8.0  # Pacific Standard Time (UTC−08:00)
+    tzinfo = timezone(timedelta(hours=timezone_offset))
+    current_time = datetime.now(tzinfo)
+    #current_time = datetime.now()
+    
     fitbit_last_time = resp['activities-heart'][0]['dateTime'] + ' ' +resp['activities-heart-intraday']['dataset'][-1]['time']
     offset = str(current_time -  datetime.strptime(fitbit_last_time, '%Y-%m-%d %H:%M:%S'))
     print(offset)
@@ -36,11 +41,14 @@ def last_heartrate():
 def last_step():
     fitbit_web_api_request_url = "https://api.fitbit.com/1/user/-/activities/steps/date/today/1d.json"
     resp = requests.get(fitbit_web_api_request_url, headers=user_auth).json()
-    print(resp)
     fitbit_web_api_request_url_1 = "https://api.fitbit.com/1/user/-/activities/distance/date/today/1d.json"
     dis_resp = requests.get(fitbit_web_api_request_url_1, headers=user_auth).json()
-    print(dis_resp)
-    current_time = datetime.now()
+    
+    timezone_offset = -8.0  # Pacific Standard Time (UTC−08:00)
+    tzinfo = timezone(timedelta(hours=timezone_offset))
+    current_time = datetime.now(tzinfo)
+    #current_time = datetime.now()
+    
     fitbit_last_time = resp['activities-steps'][0]['dateTime'] + ' ' +resp['activities-steps-intraday']['dataset'][-1]['time']
     offset = str(current_time -  datetime.strptime(fitbit_last_time, '%Y-%m-%d %H:%M:%S'))
     splitted_str = offset.split(':')
@@ -117,8 +125,13 @@ def create_row_in_env():
     request_data = request.get_json()
     temp = request_data['temp']
     humidity = request_data['humidity']
+    
+    timezone_offset = -8.0  # Pacific Standard Time (UTC−08:00)
+    tzinfo = timezone(timedelta(hours=timezone_offset))
+    current_time = datetime.now(tzinfo)
     #timestamp = request_data['timestamp']
-    timestamp = datetime.now()
+    #timestamp = datetime.now()
+    
     create_row_data = {'temp': str(temp),'humidity':str(humidity),'timestamp':str(timestamp)}
     db.env.insert_one(create_row_data)
     return '''<h1>Data inserted</h1>'''
@@ -129,7 +142,12 @@ def create_row_in_pose():
     presence = request_data['presence']
     pose = request_data['pose']
     #timestamp = request_data['timestamp']
-    timestamp = datetime.now()
+    
+    timezone_offset = -8.0  # Pacific Standard Time (UTC−08:00)
+    tzinfo = timezone(timedelta(hours=timezone_offset))
+    current_time = datetime.now(tzinfo)
+    #timestamp = datetime.now()
+    
     create_row_data = {'presence': str(presence),'pose':str(pose),'timestamp':str(timestamp)}
     db.pose.insert_one(create_row_data)
     return '''<h1>Data inserted</h1>'''
